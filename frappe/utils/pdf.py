@@ -72,8 +72,8 @@ def prepare_options(html, options):
 		#'load-error-handling': 'ignore',
 
 		# defaults
-		'margin-right': '15mm',
-		'margin-left': '15mm'
+		'margin-right': '0mm',
+		'margin-left': '0mm'
 	})
 
 	html, html_options = read_options_from_html(html)
@@ -145,9 +145,9 @@ def prepare_header_footer(soup):
 			options[html_id] = fname
 		else:
 			if html_id == "header-html":
-				options["margin-top"] = "15mm"
+				options["margin-top"] = "10mm"
 			elif html_id == "footer-html":
-				options["margin-bottom"] = "15mm"
+				options["margin-bottom"] = "10mm"
 
 	return options
 

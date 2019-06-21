@@ -23,12 +23,24 @@
 
 		{% endif %}
 
+                {% if html_id=="footer-html" %}
+                <style>
+                       body {
+                                margin: 0 !important;
+                                border: 0 !important;
+                                padding: 14.5mm 0 3mm !important;
+                        }
+                </style>
+		{% else %}
 		<style>
 			body {
 				margin: 0 !important;
 				border: 0 !important;
-				padding: 15mm 0 5mm !important;
+				padding: 12mm 0 0mm !important;
 			}
+                </style>
+                {% endif %}
+                <style>
 
 			.letter-head,
 			.letter-head-footer {

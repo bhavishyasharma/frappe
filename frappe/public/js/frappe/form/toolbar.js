@@ -30,7 +30,8 @@ frappe.ui.form.Toolbar = Class.extend({
 	},
 	set_title: function() {
 		if(this.frm.meta.title_field) {
-			var title = strip_html((this.frm.doc[this.frm.meta.title_field] || "").trim() || this.frm.docname);
+			let title_field = (this.frm.doc[this.frm.meta.title_field] || "").toString().trim();
+			var title = strip_html(title_field || this.frm.docname);
 			if(this.frm.doc.__islocal || title === this.frm.docname || this.frm.meta.autoname==="hash") {
 				this.page.set_title_sub("");
 			} else {
@@ -169,9 +170,14 @@ frappe.ui.form.Toolbar = Class.extend({
 
 		if(frappe.user_roles.includes("System Manager") && me.frm.meta.issingle === 0) {
 			this.page.add_menu_item(__("Customize"), function() {
-				frappe.set_route("Form", "Customize Form", {
-					doc_type: me.frm.doctype
-				})
+
+				if (me.frm.meta && me.frm.meta.custom) {
+					frappe.set_route('Form', 'DocType', me.frm.doctype);
+				} else {
+					frappe.set_route('Form', 'Customize Form', {
+						doc_type: me.frm.doctype
+					});
+				}
 			}, true);
 
 			if (frappe.boot.developer_mode===1 && me.frm.meta.issingle) {
@@ -249,7 +255,18 @@ frappe.ui.form.Toolbar = Class.extend({
 		var status = this.get_action_status();
 		if (status) {
 			if (status !== this.current_status) {
-				this.set_page_actions(status);
+				if (status === 'Amend') {
+					let doc = this.frm.doc;
+					frappe.xcall('frappe.client.is_document_amended', {
+						'doctype': doc.doctype,
+						'docname': doc.name
+					}).then(is_amended => {
+						if (is_amended) return;
+						this.set_page_actions(status);
+					});
+				} else {
+					this.set_page_actions(status);
+				}
 			}
 		} else {
 			this.page.clear_actions();
@@ -324,22 +341,6 @@ frappe.ui.form.Toolbar = Class.extend({
 		}
 
 		this.current_status = status;
-	},
-	make_cancel_amend_button: function() {
-		var me = this;
-		var docstatus = cint(this.frm.doc.docstatus);
-		var p = this.frm.perm[0];
-		var has_workflow = this.has_workflow();
-
-		if(has_workflow) {
-			return;
-		} else if(docstatus==1 && p[CANCEL]) {
-			this.page.set_secondary_action(__('Cancel'), function() {
-				me.frm.savecancel(this) }, 'fa fa-ban-circle');
-		} else if(docstatus==2 && p[AMEND]) {
-			this.page.set_secondary_action(__('Amend'), function() {
-				me.frm.amend_doc() }, 'fa fa-pencil', true);
-		}
 	},
 	add_update_button_on_dirty: function() {
 		var me = this;

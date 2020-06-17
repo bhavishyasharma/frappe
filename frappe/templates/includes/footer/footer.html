@@ -1,8 +1,42 @@
-<footer class="web-footer">
-	<section class="footer-links">
+<footer class"web-footer">
+	<section class="footer-links pt-2">
 		<div class="container">
+			<div class="row" style="margin-top: 25px;">
+				<div class="col-xs-12 col-sm-4">
+					<h5 class="white"><a href="/products" style="color: #ffffff !important; text-decoration: none;">Products</a></h5>
+					<ul class="nobull pl-3">
+						<li><a style="color: #ffffff !important; text-decoration: none;" href="/products/injection-moulding-machines">Injection Moulding Machines</a></li>
+						<li><a style="color: #ffffff !important; text-decoration: none;" href="/products/hopper-dryer">Hopper Dryer</a></li>
+						<li><a style="color: #ffffff !important; text-decoration: none;" href="/products/chiller">Chiller</a></li>
+						<li><a style="color: #ffffff !important; text-decoration: none;" href="/products/imm-robot">IMM Robot</a></li>
+						<li><a style="color: #ffffff !important; text-decoration: none;" href="/products/grinder">Grinder</a></li>
+					</ul>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<h5 class="white"><a style="color: #ffffff !important; text-decoration: none;" href="/services">Services</a></h5>
+					<ul class="nobull pl-3">
+						<li><a style="color: #ffffff !important; text-decoration: none;" href="/services/imm-repair">IMM Repair</a></li>
+						<li><a style="color: #ffffff !important; text-decoration: none;" href="/services/retro-fitting">Retro Fitting</a></li>
+						<li><a style="color: #ffffff !important; text-decoration: none;" href="/services/maintenance-package">Maintenance Package</a></li>
+					</ul>
+					<h5 class="white"><a style="color: #ffffff !important; text-decoration: none;" href="/about-us">About Us</a></h5>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<h5 class="white"><a style="color: #ffffff !important; text-decoration: none;" href="/contact-us">Contact Us</a></h5>
+					<p class="small mb-1"><i class="fa fa-location-arrow mr-2"></i>Address</p>
+					<p class="small pl-3"><a href="https://g.page/futech-india?share" style="color: #ffffff !important; text-decoration: none;">
+						Khewat No. 291/253, Khasra No. 320<br/>
+						Killa No. 68, Village Rohad<br/>
+						Bahadurgarh, Jhajjar<br/>
+						Haryana-124507, India</a></p>
+					<p class="small mb-1"><i class="fa fa-phone mr-2"></i>Contact Numbers</p>
+					<p class="small pl-3"><a href="tel:+918282825111" style="color: #ffffff !important; text-decoration: none;">+91-8282825111</a>, <a href="tel:+918282829111" style="color: #ffffff !important; text-decoration: none;">+91-8282829111</a></p>
+					<p class="small mb-1"><i class="fa fa-envelope mr-2"></i>Email</p>
+					<p class="small pl-3"><a href="mailto:info@futech.co.in" style="color: #ffffff !important; text-decoration: none;">info@futech.co.in</a></p>
+				</div>
+			</div>
 			<div class="row">
-				<div class="col-sm-6 text-left">
+				<div class="col-sm-12 text-left">
 					{% if footer_items -%}
 					<div class="row">
 						{% include "templates/includes/footer/footer_items.html" %}
@@ -16,7 +50,7 @@
 					{% endblock %}
 				</div>
 			</div>
-			<div class="row footer-bottom-line mt-5">
+			<div class="row footer-bottom-line mt-2">
 				<div class="text-muted small col-sm-6 col-12">
 					{% if copyright %}
 						&copy; {{ copyright }}

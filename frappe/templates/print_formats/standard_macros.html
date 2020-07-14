@@ -162,6 +162,16 @@ data-fieldname="{{ df.fieldname }}" data-fieldtype="{{ df.fieldtype }}"
 	{% if letter_head and not no_letterhead %}
 		<div class="letter-head">{{ letter_head }}</div>
 	{% endif %}
+	{%- if doc.meta.is_submittable and doc.docstatus==0 and (print_settings==None or print_settings.add_draft_heading) -%}
+		<div class="text-center" document-status="draft">
+			<h4 style="margin: 0px;">{{ _("DRAFT") }}</h4>
+    	</div>
+	{%- endif -%}
+	{%- if doc.meta.is_submittable and doc.docstatus==2-%}
+		<div class="text-center" document-status="cancelled">
+			<h4 style="margin: 0px;">{{ _("CANCELLED") }}</h4>
+    	</div>
+	{%- endif -%}
     {% if doc.print_heading_template %}
         {{ frappe.render_template(doc.print_heading_template, {"doc":doc}) }}
     {% else %}
@@ -173,14 +183,4 @@ data-fieldname="{{ df.fieldname }}" data-fieldtype="{{ df.fieldtype }}"
         </h2>
     </div>
     {% endif %}
-	{%- if doc.meta.is_submittable and doc.docstatus==0 and (print_settings==None or print_settings.add_draft_heading) -%}
-	<div class="text-center" document-status="draft">
-		<h4 style="margin: 0px;">{{ _("DRAFT") }}</h4>
-    </div>
-	{%- endif -%}
-	{%- if doc.meta.is_submittable and doc.docstatus==2-%}
-	<div class="text-center" document-status="cancelled">
-		<h4 style="margin: 0px;">{{ _("CANCELLED") }}</h4>
-    </div>
-	{%- endif -%}
 {%- endmacro -%}

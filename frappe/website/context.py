@@ -220,7 +220,7 @@ def add_metatags(context):
 			tags["twitter:card"] = "summary_large_image"
 
 		if not "og:type" in tags:
-			tags["og:type"] = "article"
+			tags["og:type"] = "website"
 
 		if tags.get("name"):
 			tags["og:title"] = tags["twitter:title"] = tags["name"]
@@ -229,7 +229,7 @@ def add_metatags(context):
 			tags["og:title"] = tags["twitter:title"] = tags["title"]
 
 		if tags.get("description"):
-			tags["og:description"] = tags["twitter:description"] = tags["description"]
+			tags.pop("description")
 
 		image = tags.get('image', context.image or None)
 		if image:

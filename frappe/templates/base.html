@@ -19,7 +19,7 @@
 		type="image/x-icon"
 	>
 	{% endblock %}
-
+	<link rel="canonical" href="https://www.futech.co.in/" />
 	{%- block head -%}
 		{% if head_html is defined -%}
 		{{ head_html or "" }}
@@ -51,6 +51,125 @@
 		window.dev_server = {{ dev_server }};
 		window.socketio_port = {{ frappe.socketio_port }};
     </script>
+	<script type="application/ld+json">
+	{
+    	"@context":"https://schema.org",
+	    "@graph": [
+        	{
+            	"@type":"WebSite",
+            	"@id":"https://futech.co.in/#website",
+            	"url":"https://futech.co.in/",
+            	"name":"FUTECH Injection Moulding Machines",
+        	    "description":"B. S. TECHNOLOGIES is leading manufacturer and supplier of plastic injection moulding machines and ancillary equipment from India.",
+    	        "potentialAction":[
+	                {
+                    	"@type":"SearchAction",
+                	    "target":"https://futech.co.in/?s={search_term_string}",
+            	        "query-input":"required name=search_term_string"
+        	        }],
+    	        "inLanguage":"en-US"
+	        },
+			{
+				"@context" : "http://schema.org",
+				"@type" : "Organization",
+				"name" : "FUTECH Injection Moulding Machines",
+				"url" : "https://futech.co.in",
+				"sameAs" : [
+   					"https://www.linkedin.com/company/14570066",
+   					"https://www.facebook.com/futech.co.in"
+				],
+				"address": {
+					"@type": "PostalAddress",
+					"streetAddress": "Khewat No. 291/253, Khasra No. 320 Killa No. 68, Village Rohad",
+					"addressLocality": "Bahadurgarh, Jhajjar",
+					"addressRegion": "Haryana",
+    				"postalCode": "124507",
+    				"addressCountry": "India"
+  				}
+			},{
+            	"@type":"WebPage",
+        	    "@id":"https://futech.co.in/#webpage",
+    	        "url":"https://futech.co.in/",
+	            "name":"FUTECH Injection Moulding Machines | B.S. Technologies",
+            	"isPartOf":{"@id":"https://futech.co.in/#website"},
+        	    "datePublished":"2020-06-5T09:05:13+00:00",
+    	        "description":"B. S. TECHNOLOGIES is leading manufacturer and supplier of plastic injection moulding machines and ancillary equipment from India.",
+	            "inLanguage":"en-US",
+            	"potentialAction":[{"@type":"ReadAction","target":["https://futech.co.in/"]}]
+        	},{
+				"@context" : "http://schema.org",
+				"@type" : "LocalBusiness",
+				"name" : "B.S. Technologies",
+				"image" : "https://futech.co.in/files/futech-logo.png",
+				"telephone" : "+91-8282825111",
+				"email" : "info@futech.co.in",
+				"priceRange": "INR 10,00,000 - INR 1,50,00,000",
+				"address" : {
+					"@type" : "PostalAddress",
+					"streetAddress" : "Khewat No. 291/253, Khasra No. 320 Killa No. 68, Village Rohad",
+					"addressLocality" : "Bahadurgarh, Jhajjar",
+					"addressRegion" : "Haryana",
+					"addressCountry" : "India",
+					"postalCode" : "124507"
+  				},
+				"url" : "https://futech.co.in/"
+			},{
+				"@context" : "http://schema.org",
+				"@type" : "Product",
+				"aggregateRating": {
+					"@type": "AggregateRating",
+					"ratingValue": "4.5",
+					"reviewCount": "18"
+				},
+				"name" : "Injection Moulding Machines",
+				"image" : "https://futech.co.in/files/machines.png",
+				"description" : "B.S. Technologies is manufactures a wide range of injection moulding machines starting from 07 Ton to 1100 Ton Capacity.\n                B.S. Technologies is among the select few companies in India that offer both Hydraulic and Toggle Injection Moulding Machines.",
+				"url" : "https://futech.co.in/",
+				"sku": "Nos",
+				"mpn": "futech-imm",
+				"brand" : {
+					"@type" : "Brand",
+					"name" : "FUTECH",
+					"logo" : "https://futech.co.in/files/futech-logo.png"
+				},
+				"offers" : {
+					"@type" : "Offer",
+					"price" : "2000000",
+					"availability": "http://schema.org/InStock",
+					"priceCurrency": "INR",
+					"priceValidUntil": "2022-12-31",
+					"url": "https://futech.co.in/products/injection-moulding-machines"
+				},
+				"review": [
+					{
+						"@type": "Review",
+						"author": "Abhinav Dubey",
+						"description": "Maintenance free machines, In over 2 years i have replaced all of My machiness with Fu-Tech Injection Moulding machines now",
+						"datePublished": "2019-11-01",
+						"reviewRating": {
+							"@type": "Rating",
+							"bestRating": "5",
+							"ratingValue": "5",
+							"worstRating": "1"
+						}
+					},
+					{
+						"@type": "Review",
+						"author": "Lakshay Tyagi",
+						"description": "Really good company and there production is one of the best in world also the staff are really good and educated",
+						"datePublished": "2019-07-01",
+						"reviewRating": {
+                            "@type": "Rating",
+                            "bestRating": "5", 
+                            "ratingValue": "5",
+                            "worstRating": "1"
+                        }
+					}
+				]
+			}
+    	]
+	}
+	</script>
 </head>
 <body frappe-session-status="{{ 'logged-in' if frappe.session.user != 'Guest' else 'logged-out'}}" data-path="{{ path | e }}" {%- if template and template.endswith('.md') %} frappe-content-type="markdown" {% endif -%}>
 	{%- block banner -%}

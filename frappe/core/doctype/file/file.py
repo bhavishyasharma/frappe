@@ -1,46 +1,45 @@
 # Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
 # MIT License. See license.txt
 
-from __future__ import unicode_literals
-from frappe import _
 """
 record of files
 
 naming for same name files: file.gif, file-1.gif, file-2.gif etc
 """
 
-import frappe
-import json
-import os
+from __future__ import unicode_literals
+
 import base64
-import re
 import hashlib
-import mimetypes
+import imghdr
 import io
+import json
+import mimetypes
+import os
+import re
 import shutil
+import zipfile
+
 import requests
 import requests.exceptions
-import imghdr
+from PIL import Image, ImageFile, ImageOps
+from six import PY2, StringIO, string_types, text_type
+from six.moves.urllib.parse import quote, unquote
 
-from frappe.utils import get_hook_method, get_files_path, random_string, encode, cstr, call_hook_method, cint
-from frappe import _
-from frappe import conf
-from frappe.utils.nestedset import NestedSet
+import frappe
+from frappe import _, conf
 from frappe.model.document import Document
-from frappe.utils import strip
-from PIL import Image, ImageOps
-from six import StringIO, string_types
-from six.moves.urllib.parse import unquote, quote
-from six import text_type, PY2
-import zipfile
+from frappe.utils import call_hook_method, cint, cstr, encode, get_files_path, get_hook_method, random_string, strip
+
 
 class MaxFileSizeReachedError(frappe.ValidationError):
 	pass
 
-
-class FolderNotEmpty(frappe.ValidationError): pass
+class FolderNotEmpty(frappe.ValidationError):
+	pass
 
 exclude_from_linked_with = True
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 class File(Document):
@@ -181,11 +180,11 @@ class File(Document):
 			if duplicate_file:
 				duplicate_file_doc = frappe.get_cached_doc('File', duplicate_file.name)
 				if duplicate_file_doc.exists_on_disk():
-					# if it is attached to a document then throw DuplicateEntryError
+					# if it is attached to a document then throw FileAlreadyAttachedException
 					if self.attached_to_doctype and self.attached_to_name:
 						self.duplicate_entry = duplicate_file.name
 						frappe.throw(_("Same file has already been attached to the record"),
-							frappe.DuplicateEntryError)
+							frappe.FileAlreadyAttachedException)
 					# else just use the url, to avoid uploading a duplicate
 					else:
 						self.file_url = duplicate_file.file_url
@@ -607,8 +606,7 @@ def get_local_image(file_url):
 	try:
 		image = Image.open(file_path)
 	except IOError:
-		frappe.msgprint(_("Unable to read file format for {0}").format(file_url))
-		raise
+		frappe.msgprint(_("Unable to read file format for {0}").format(file_url), raise_exception=True)
 
 	content = None
 
@@ -705,7 +703,12 @@ def remove_all(dt, dn, from_delete=False):
 	try:
 		for fid in frappe.db.sql_list("""select name from `tabFile` where
 			attached_to_doctype=%s and attached_to_name=%s""", (dt, dn)):
-			remove_file(fid=fid, attached_to_doctype=dt, attached_to_name=dn, from_delete=from_delete)
+			if from_delete:
+				# If deleting a doc, directly delete files
+				frappe.delete_doc("File", fid, ignore_permissions=True)
+			else:
+				# Removes file and adds a comment in the document it is attached to
+				remove_file(fid=fid, attached_to_doctype=dt, attached_to_name=dn, from_delete=from_delete)
 	except Exception as e:
 		if e.args[0]!=1054: raise # (temp till for patched)
 
@@ -714,7 +717,10 @@ def has_permission(doc, ptype=None, user=None):
 	has_access = False
 	user = user or frappe.session.user
 
-	if not doc.is_private or doc.owner == user or user == 'Administrator':
+	if ptype == 'create':
+		has_access = frappe.has_permission('File', 'create', user=user)
+
+	if not doc.is_private or doc.owner in [user, 'Guest'] or user == 'Administrator':
 		has_access = True
 
 	if doc.attached_to_doctype and doc.attached_to_name:

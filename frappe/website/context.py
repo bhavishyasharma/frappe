@@ -213,41 +213,7 @@ def add_sidebar_data(context):
 
 
 def add_metatags(context):
-	tags = frappe._dict(context.get("metatags") or {})
-
-	if tags:
-		if not "twitter:card" in tags:
-			tags["twitter:card"] = "summary_large_image"
-
-		if not "og:type" in tags:
-			tags["og:type"] = "website"
-
-		if tags.get("name"):
-			tags["og:title"] = tags["twitter:title"] = tags["name"]
-
-		if tags.get("title"):
-			tags["og:title"] = tags["twitter:title"] = tags["title"]
-
-		if tags.get("description"):
-			tags.pop("description")
-
-		image = tags.get('image', context.image or None)
-		if image:
-			tags["og:image"] = tags["twitter:image:src"] = tags["image"] = frappe.utils.get_url(image)
-
-		if context.path:
-			tags['og:url'] = tags['url'] = frappe.utils.get_url(context.path)
-
-		if context.published_on:
-			tags['datePublished'] = context.published_on
-
-		if context.author:
-			tags['author'] = context.author
-
-		if context.description:
-			tags['description'] = context.description
-
-		tags['language'] = frappe.local.lang or 'en'
+	tags = frappe._dict(context.metatags or {})
 
 	# Get meta tags from Website Route meta
 	# they can override the defaults set above
@@ -266,5 +232,32 @@ def add_metatags(context):
 			d = meta_tag.get_meta_dict()
 			tags.update(d)
 
+	if tags:
+		if "og:type" not in tags:
+			tags["og:type"] = "article"
+
+		name = tags.get('name') or tags.get('title')
+		if name:
+			tags["og:title"] = tags["twitter:title"] = name
+
+		description = tags.get("description") or context.description
+		if description:
+			tags['description'] = tags["og:description"] = tags["twitter:description"] = description
+
+		image = tags.get('image', context.image or None)
+		if image:
+			tags["og:image"] = tags["twitter:image"] = tags["image"] = frappe.utils.get_url(image)
+			tags['twitter:card'] = "summary_large_image"
+
+		if context.author or tags.get('author'):
+			tags['author'] = context.author or tags.get('author')
+
+		tags['og:url'] = tags['url'] = frappe.utils.get_url(context.path)
+
+		if context.published_on:
+			tags['datePublished'] = context.published_on
+
+
+		tags['language'] = frappe.local.lang or 'en'
 	# update tags in context
 	context.metatags = tags

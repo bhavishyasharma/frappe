@@ -19,6 +19,9 @@
 		type="image/x-icon"
 	>
 	{% endblock %}
+
+	<link rel="canonical" href="{{ canonical }}">
+
 	{%- block head -%}
 		{% if head_html is defined -%}
 		{{ head_html or "" }}

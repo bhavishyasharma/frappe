@@ -293,6 +293,8 @@ export default class Grid {
 			this.wrapper.find(".grid-footer").toggle(false);
 		}
 
+		this.wrapper.find('.grid-add-row, .grid-add-multiple-rows').toggle(this.is_editable());
+
 	}
 	truncate_rows(data) {
 		if(this.grid_rows.length > data.length) {
@@ -372,7 +374,7 @@ export default class Grid {
 		return data;
 	}
 	get_modal_data() {
-		return this.df.get_data() ? this.df.get_data().filter(data => {
+		return this.df.get_data ? this.df.get_data().filter(data => {
 			if (!this.deleted_docs || !in_list(this.deleted_docs, data.name)) {
 				return data;
 			}

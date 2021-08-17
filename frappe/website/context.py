@@ -23,8 +23,8 @@ def get_context(path, args=None):
 	else:
 		context["path"] = path
 
+	context.canonical = frappe.utils.get_url(frappe.utils.escape_html(context.path))
 	context.route = context.path
-
 	context = build_context(context)
 
 	# set using frappe.respond_as_web_page

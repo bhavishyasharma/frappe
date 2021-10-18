@@ -130,6 +130,15 @@ def get_website_settings(context=None):
 	if settings.address:
 		context["footer_address"] = settings.address
 
+	if settings.linkedin_url:
+		context["linkedin_url"] = settings.linkedin_url
+
+	if settings.youtube_url:
+		context["youtube_url"] = settings.youtube_url
+
+	if settings.facebook_url:
+		context["facebook_url"] = settings.facebook_url
+
 	for k in ["facebook_share", "google_plus_one", "twitter_share", "linked_in_share",
 		"disable_signup"]:
 		context[k] = int(context.get(k) or 0)

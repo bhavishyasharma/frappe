@@ -46,6 +46,9 @@
   "footer_template_values",
   "edit_footer_template_values",
   "hide_footer_signup",
+  "linkedin_url",
+  "youtube_url",
+  "facebook_url",
   "integrations",
   "enable_view_tracking",
   "enable_google_indexing",
@@ -425,6 +428,21 @@
    "fieldname": "navbar_template_section",
    "fieldtype": "Section Break",
    "label": "Navbar Template"
+  },
+  {
+   "fieldname": "linkedin_url",
+   "fieldtype": "Small Text",
+   "label": "LinkedIn URL"
+  },
+  {
+   "fieldname": "youtube_url",
+   "fieldtype": "Small Text",
+   "label": "Youtube URL"
+  },
+  {
+   "fieldname": "facebook_url",
+   "fieldtype": "Small Text",
+   "label": "Facebook URL"
   }
  ],
  "icon": "fa fa-cog",
@@ -433,7 +451,7 @@
  "issingle": 1,
  "links": [],
  "max_attachments": 10,
- "modified": "2021-07-15 17:39:56.609771",
+ "modified": "2021-10-16 21:52:54.416162",
  "modified_by": "Administrator",
  "module": "Website",
  "name": "Website Settings",

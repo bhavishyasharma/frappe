@@ -29,5 +29,31 @@
 			</div>
 		</div>
 		{% endfor %}
+		<div class="col-sm-{{ cols }} footer-group">
+			{% if footer_address %}
+			{{ footer_address }}
+			{% endif %}
+			{% if facebook_url %}
+			<a href="{{ facebook_url }}" style="text-decoration: none;">
+				<svg class="icon icon-md" style="stroke: #007bff; fill: #007bff;">
+					<use class="" href="#icon-facebook"></use>
+				</svg>
+			</a>
+			{% endif %}
+			{% if youtube_url %}
+			<a href="{{ youtube_url }}" style="text-decoration: none;">
+				<svg class="icon icon-md" style="stroke: #007bff; fill: #007bff;">
+					<use class="" href="#icon-youtube"></use>
+				</svg>
+			</a>
+			{% endif %}
+			{% if linkedin_url %}
+			<a href="{{ linkedin_url }}" style="text-decoration: none;">
+				<svg class="icon icon-md" style="stroke: #007bff; fill: #007bff;">
+					<use class="" href="#icon-linkedin"></use>
+				</svg>
+		        </a>
+			{% endif %}
+		</div>		
 	</div>
 </div>

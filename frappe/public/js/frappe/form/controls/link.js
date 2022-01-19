@@ -495,7 +495,7 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 		if (!this.frm) return fetch_map;
 
 		for (const key of ["*", this.df.parent]) {
-			if (this.frm.fetch_dict[key] && this.frm.fetch_dict[key][this.df.fieldname]) {
+			if (this.frm.fetch_dict[key] && this.frm.fetch_dict[key][this.df.fieldname] && !('gst_percentage' in this.frm.fetch_dict[key][this.df.fieldname])) {
 				Object.assign(fetch_map, this.frm.fetch_dict[key][this.df.fieldname]);
 			}
 		}

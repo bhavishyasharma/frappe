@@ -1446,6 +1446,11 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 					read_only: 1,
 				},
 			],
+			primary_action_label: __("Copy to clipboard"),
+			primary_action: () => {
+				frappe.utils.copy_to_clipboard(this.get_share_url());
+				d.hide();
+			},
 		});
 		d.show();
 	}
@@ -1864,12 +1869,6 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 		const doctype = data.doctype;
 		if (!doctype) return;
 		frappe.provide("frappe.views.trees");
-
-		// refresh tree view
-		if (frappe.views.trees[doctype]) {
-			frappe.views.trees[doctype].tree.refresh();
-			return;
-		}
 
 		// refresh list view
 		const page_name = frappe.get_route_str();

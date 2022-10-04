@@ -228,6 +228,7 @@ frappe.ui.form.PrintView = class {
 				},
 			}, true);
 		}
+		refresh_print_format();
 	}
 
 	edit_print_format() {

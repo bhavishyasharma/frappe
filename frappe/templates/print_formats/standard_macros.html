@@ -188,7 +188,7 @@ data-fieldname="{{ df.fieldname }}" data-fieldtype="{{ df.fieldtype }}"
 		<div class="letter-head">{{ letter_head }}</div>
 	{% endif %}
 	{% if print_heading_template %}
-		{{ frappe.render_template(print_heading_template, {"doc":doc}) }}
+		{{ frappe.render_template(print_heading_template, {"doc":doc, "print_settings": print_settings}) }}
 	{% else %}
 	<div class="print-heading">
 		<h2>

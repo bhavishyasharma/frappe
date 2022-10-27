@@ -2,6 +2,7 @@
 // MIT License. See license.txt
 
 import deep_equal from "fast-deep-equal";
+import cloneDeepWith from "lodash/cloneDeepWith";
 
 frappe.provide("frappe.utils");
 
@@ -916,6 +917,10 @@ Object.assign(frappe.utils, {
 		return deep_equal(a, b);
 	},
 
+	deep_clone(obj, customizer) {
+		return cloneDeepWith(obj, customizer);
+	},
+
 	file_name_ellipsis(filename, length) {
 		let first_part_length = length * 2 / 3;
 		let last_part_length = length - first_part_length;
@@ -981,7 +986,7 @@ Object.assign(frappe.utils, {
 
 		return $el;
 	},
-	
+
 	eval(code, context={}) {
 		let variable_names = Object.keys(context);
 		let variables = Object.values(context);
@@ -1355,5 +1360,9 @@ Object.assign(frappe.utils, {
 			return array;
 		}
 		return undefined;
+	},
+
+	is_current_user(user) {
+		return user === frappe.session.user;
 	}
 });

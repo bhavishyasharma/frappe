@@ -1,13 +1,15 @@
 import frappe
 
+
 @frappe.whitelist()
 def get_print_settings_to_show(doctype, docname):
 	doc = frappe.get_doc(doctype, docname)
-	print_settings = frappe.get_single('Print Settings')
+	print_settings = frappe.get_single("Print Settings")
 
 	fields = []
 
 	if hasattr(doc, 'get_print_settings'):
+	if hasattr(doc, "get_print_settings"):
 		fields = doc.get_print_settings() or []
 	elif doc.doctype != "Sales Invoice":
 		return []
@@ -36,6 +38,8 @@ def get_print_settings_to_show(doctype, docname):
 
 	for fieldname in fields:
 		df = print_settings.meta.get_field(fieldname)
+		if not df:
+			continue
 		df.default = print_settings.get(fieldname)
 		print_settings_fields.append(df)
 

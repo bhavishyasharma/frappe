@@ -77,7 +77,7 @@ class PrintFormat(Document):
 		# old_doc_type is required for clearing item cache
 		self.old_doc_type = frappe.db.get_value("Print Format", self.name, "doc_type")
 
-		self.extract_images()
+#		self.extract_images()
 
 		if not self.module:
 			self.module = frappe.db.get_value("DocType", self.doc_type, "module")
